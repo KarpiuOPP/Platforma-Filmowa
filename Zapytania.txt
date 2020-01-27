@@ -1,0 +1,46 @@
+1) Sprawdź jaki aktor grał w jakim filmie:
+
+SELECT aktor.imie, aktor.nazwisko, filmy.tytul  FROM filmy_aktor INNER JOIN aktor ON filmy_aktor.id_aktor = aktor.id_aktor INNER JOIN filmy ON filmy_aktor.id_filmy = filmy.id_filmy;
+
+2) Podaj imie i naziwsko klientów, którzy zamieszkują w Polsce, Francji oraz Szwecji.
+
+SELECT imie, nazwisko, adres.kraj FROM klient INNER JOIN adres ON klient.id_klient=adres.id_klient WHERE kraj IN ('Polska','Francja','Szwecja');
+
+3) Wyszukuja imie, naziwsko aktora oraz film w którym grał. Aktor musi być urodzony w przedziale 1990-01-01 - 2019-01-01.
+
+SELECT aktor.imie, aktor.nazwisko, filmy.tytul, aktor.data_urodzenia FROM filmy_aktor INNER JOIN aktor ON aktor.id_aktor=filmy_aktor.id_aktor INNER JOIN filmy ON filmy.id_filmy = filmy_aktor.id_filmy WHERE data_urodzenia BETWEEN DATE '1990-01-01' AND '2019-01-01';
+
+4) Wyszukaj email klientów, które mają koniec .com
+
+SELECT email FROM klient WHERE email LIKE '%com';
+
+5) Pokaż tytuły filmów, które mają jakoś 4k
+
+SELECT filmy.tytul FROM filmy INNER JOIN jakosc ON filmy.id_jakosc = jakosc.id_jakosc WHERE filmy.id_jakosc = 3;
+
+6) Zlicz ilu klientów jest z kraju powyżej 3.
+
+SELECT kraj, COUNT(*) AS suma FROM adres GROUP BY kraj HAVING COUNT(*) >3;
+
+7) Wyswietl wiek aktorów licząc do dnia dzisiejszego.
+
+SELECT imie, nazwisko, plec, AGE(NOW(), data_urodzenia) as wiek  FROM aktor;
+
+8) Wyswietl wszystkich klientów. Pokaż także tych, którzy mają konta premium wraz z datą aktywacji i zakończenia konta premium.
+
+SELECT imie, nazwisko, email, klient.id_premium, premium.data_aktywacji, premium.data_zakonczenia FROM klient LEFT JOIN Premium ON klient.id_premium=Premium.id_premium;
+
+9) Wyswietl rezyserów i tytuł filmu jaki nakręcili.
+
+SELECT filmy.tytul, rezyser.imie, rezyser.nazwisko FROM filmy INNER JOIN rezyser ON filmy.id_rezyser=rezyser.id_rezyser;
+
+10) Pokaż klientów, którzy dodali filmy do ulubionych. Ich tytuły oraz czas trwania filmu.
+
+SELECT klient.imie, klient.nazwisko, filmy.tytul, filmy.czas_trwania FROM klient INNER JOIN ulubione ON klient.id_klient=ulubione.id_klient INNER JOIN filmy ON ulubione.id_filmy=filmy.id_filmy;
+
+
+
+
+
+
+
