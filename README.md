@@ -1,9 +1,12 @@
 # Platforma-Filmowa
 Database as a postgreSQL project
 
-Stwórz diagram plików encji oraz opis bazy danych.
-Należy utworzyć całą listę danych na podstawie diagramu oraz podanego wcześniej opisu.
-Na koniec skorzystaj z 10 wybranych przez siebie zapytań
+Baza danych platformy filmowej.
+PostgreSQL - zapytania, DML, DDL.
+PL/SQL - DML,DDL, procedury, triggery
+T-SQL - DML, DDL, procedury, triggery
+
+Diagram związków encji zaprojektowany przy użyciu Vertabelo
 
 
 Autor: Marcin Karpiński
