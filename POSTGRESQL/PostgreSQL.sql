@@ -10,8 +10,6 @@ CREATE TABLE Adres (
     UNIQUE (id_Klient)
 );
 
-
--- Table: Aktor
 CREATE TABLE Aktor (
     id_Aktor BIGSERIAL  NOT NULL PRIMARY KEY,
     imie VARCHAR(50) NOT NULL,
@@ -21,7 +19,6 @@ CREATE TABLE Aktor (
     CONSTRAINT plec_constraint CHECK (plec = 'Kobieta' OR plec = 'Mezczyzna')
 );
 
--- Table: Filmy
 CREATE TABLE Filmy (
     id_Filmy BIGSERIAL  NOT NULL PRIMARY KEY,
     tytul VARCHAR(50)  NOT NULL,
@@ -35,7 +32,6 @@ CREATE TABLE Filmy (
     UNIQUE (tytul)
 );
 
--- Table: Filmy4k
 CREATE TABLE Jakosc (
     id_Jakosc BIGSERIAL  NOT NULL PRIMARY KEY,
     full_hd boolean NOT NULL ,
@@ -43,7 +39,6 @@ CREATE TABLE Jakosc (
     cztery_k boolean NOT NULL
 );
 
--- Table: Klient
 CREATE TABLE Klient (
     id_Klient BIGSERIAL  NOT NULL PRIMARY KEY,
     imie VARCHAR(50)  NOT NULL,
@@ -57,7 +52,6 @@ CREATE TABLE Klient (
     UNIQUE (id_premium)
 );
 
--- Table: Premium
 CREATE TABLE Premium (
     id_premium BIGSERIAL  NOT NULL PRIMARY KEY,
     data_aktywacji DATE NOT NULL,
@@ -65,7 +59,6 @@ CREATE TABLE Premium (
     cena numeric(19,2) NOT NULL
 );
 
--- Table: Rezyser
 CREATE TABLE Rezyser (
     id_Rezyser BIGSERIAL  NOT NULL PRIMARY KEY,
     imie VARCHAR(50) NOT NULL,
@@ -75,7 +68,6 @@ CREATE TABLE Rezyser (
     CONSTRAINT plec_constraint CHECK (plec = 'Kobieta' OR plec = 'Mezczyzna')
 );
 
--- Table: Ulubione
 CREATE TABLE Ulubione (
     id_ulubione BIGSERIAL  NOT NULL PRIMARY KEY,
     id_Klient BIGINT,
@@ -89,8 +81,6 @@ CREATE TABLE Filmy_Aktor (
     id_Aktor BIGINT
 );
 
--- foreign keys
--- Reference: Adres_Klient (table: Adres)
 ALTER TABLE Adres ADD CONSTRAINT Adres_Klient
     FOREIGN KEY (id_Klient)
     REFERENCES Klient (id_Klient)
@@ -112,7 +102,6 @@ ALTER TABLE Filmy_Aktor ADD CONSTRAINT Aktor_filmyaktor
     INITIALLY IMMEDIATE
 ;
 
--- Reference: Filmy4k_Filmy (table: Filmy4k)
 ALTER TABLE Filmy ADD CONSTRAINT Filmy_Jakosc
     FOREIGN KEY (id_Jakosc)
     REFERENCES Jakosc (id_Jakosc)
@@ -120,7 +109,6 @@ ALTER TABLE Filmy ADD CONSTRAINT Filmy_Jakosc
     INITIALLY IMMEDIATE
 ;
 
--- Reference: Filmy_Rezyser (table: Filmy)
 ALTER TABLE Filmy ADD CONSTRAINT Filmy_Rezyser
     FOREIGN KEY (id_Rezyser)
     REFERENCES Rezyser (id_Rezyser)  
@@ -128,7 +116,6 @@ ALTER TABLE Filmy ADD CONSTRAINT Filmy_Rezyser
     INITIALLY IMMEDIATE
 ;
 
--- Reference: Filmy_Ulubione (table: Filmy)
 ALTER TABLE Ulubione ADD CONSTRAINT Ulubione_Filmy
     FOREIGN KEY (id_Filmy)
     REFERENCES Filmy (id_Filmy)
@@ -136,7 +123,6 @@ ALTER TABLE Ulubione ADD CONSTRAINT Ulubione_Filmy
     INITIALLY IMMEDIATE
 ;
 
--- Reference: Klient_Premium (table: Klient)
 ALTER TABLE Klient ADD CONSTRAINT Klient_Premium
     FOREIGN KEY (id_premium)
     REFERENCES Premium (id_premium)  
@@ -144,7 +130,6 @@ ALTER TABLE Klient ADD CONSTRAINT Klient_Premium
     INITIALLY IMMEDIATE
 ;
 
--- Reference: Ulubione_Klient (table: Ulubione)
 ALTER TABLE Ulubione ADD CONSTRAINT Ulubione_Klient
     FOREIGN KEY (id_Klient)
     REFERENCES Klient (id_Klient)  
@@ -183,58 +168,56 @@ INSERT INTO Jakosc (id_Jakosc,full_hd, dwa_k, cztery_k) VALUES (1,true,true,true
 INSERT INTO Jakosc (id_Jakosc,full_hd, dwa_k, cztery_k) VALUES (2,true,true,false);
 INSERT INTO Jakosc (id_Jakosc,full_hd, dwa_k, cztery_k) VALUES (3,true,false,false);
 
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (1,'Titanic',15,'Film dokumentalny opowiadajacy o zatonieciu titanica',100 , 'Dokumentalny', 1,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (2,'Jurassic Park', 15, 'Film o dinozaurach',90, 'Akcja', 3,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (3,'Joker', 18, 'Strudzony zyciem komik popada w obled i staje sie psychopatycznym morderca', 122, 'Dramat', 1,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (4,'Pewnego razu... w Holywood', 15, 'Aktor Rick Dalton i jego przyjaciel kaskader powracaja do Hollywood',161 , 'Akcja', 2,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (5,'Avengers: Koniec Gry', 12, 'Po wymazaniu polowy zycia we Wszechswiecie przez Thanosa Avengersi staraja sie zrobic wszystko, co konieczne, aby pokonac szalonego tytana',182, 'Akcja', 3,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (6,'Irlandczyk', 18, 'Platny zabojca Frank Sheeran powraca do sekretow, ktorych strzegl jako lojalny czlonek rodziny przestepczej Bufalino',210 , 'Biograficzny', 4,2);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (7,'Boze Cialo', 18, 'Dwudziestoletni Daniel zostaje warunkowo zwolniony z poprawczaka', 115, 'Obyczajowy', 5,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (8,'Kapitan Marvel', 7, 'Ziemska kobieta po kontakcie z obca rasa Kree otrzymuje nadludzkie moce',124 , 'Akcja', 6,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (9,'Glass', 18, 'Straznik David Dunn, wykorzystuje swoje nadprzyrodzone zdolnosci, tropi czlowieka o wielu osobowosciach',129, 'Thriller', 7,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (10,'Krol Lew', 3, 'W wyniku podstepu Skazy, prawowity wladca Afrykanskiej sawanny Simba zostaje wygnany',118, 'Familijny', 8,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (11,'Parasite', 12, 'Kiedy Ki-Woo dostaje prace jako koreptetytor corki zamoznego malzenstwa, wymysla sposob na zapewnienie zatrudnienia rowniez reszcie swojej rodziny',122, 'Dramat', 3,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (12,'Jak wytresowac smoka 3', 3, 'Opowiesc o wytresowaniu smoka',104, 'Familijny', 15,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (13,'Spider-Man: Daleko od domu', 7, 'Kolejny film o czlowieku pajaku',129, 'Akcja', 17,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (14,'Ad Astra', 15, 'Astronauta przeszukuje galaktyke w celu odnalezienia zaginionego dwadziescia lat wczesniej ojca',124, 'Thriller', 10,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (15,'To: Rozdzial 2', 18, '27 lat po tragicznych wydarzeniach w Derry dorosli czlonkowie "klubu Frajerow" powracaja do miasteczka, aby ponownie zmierzyc sie z zabojczym klaunem',169, 'Horror', 20,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (16,'Gwiezdne Wojny: Skywalker. Odrodzenie', 7, 'Czlonkowie organizacji Ruchu Oporu ponownie stawiaja czola Najwyzszemu Porzadkowi',155, 'Przygodowy', 3,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (17,'X-Men: Mroczna Phoenix', 12, 'Kolejny nudny film o x-menach',114, 'Akcja', 23,2);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (18,'Na noze', 7, 'Detektyw Blanc bada sprawe smierci bogatego pisarza, glowy ekscentrycznej rodziny. Wszyscy jego krewni sa podejrzani',130, 'Kryminal', 25,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (19,'Tylko nie mow nikomu', 12, 'Dzienikarz sledczy rozmawia z dziewiecioma ksiezmi katolickimi, ktorzy dopuscili sie zbrodni pedofilii i molestowania nieletnich',121, 'Dokumentalny', 24,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (20,'John Wick 3', 12, 'John Wick probuje opuscic Nowy Jork po tym, jak zostaje wydalony z organizacji zabojcow za morderstwo czlonka rady',131, 'Akcja', 16,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (21,'Toy Story 4', 3, 'Kowboj Chudy wraz z przyjaciolmi wyruszaja na poszukiwania zaginionej nowej zabawki, Sztucka',100, 'Familijny', 13,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (22,'Shazam!', 3, 'Chlopiec otrzymuje moce dzieki ktorym staje sie doroslym superbohaterem',132, 'Akcja', 12,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (23,'Alladyn', 3, 'Chlopak o czystym sercu dostaje propozycje od poteznego wezyra, by znalazl dla niego tajemnicza lampe',128, 'Przygodowy', 15,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (24,'Rocketman', 3, 'Historia zycia Eltona Johna',121, 'Biograficzny', 4,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (25,'Zombieland: Kulku w leb', 12, 'Od czasu gdy na ziemi pojawily sie zombie udalo im sie ewoluowac przez co trudniej z nimi walczyc',93, 'Komedia', 2,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (26,'Czarownica 2', 7, 'Aurora postanawia wyjsc za maz i zamieszkac w zamku przyszlego meza',119, 'Familijny', 7,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (27,'To my', 12, 'Matka i ojciec spedzaja czas z dziecmi w domku na plazy. Wkrotce ich spokoj zakocaja nieproszeni goscie',120, 'Thriller', 8,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (28,'Kraina Lodu 2', 3, 'Elsa i Anna wraz z przyjaciolmi udaja sie do zaczarowanego lasu w poszukiwaniu pomocy dla swojego krolestwa',103, 'Przygodowy', 9,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (29,'Lighthouse', 15, 'Historia dwoch straznikow latarni morskiej ktorzy w obliczy samotnosci powoli traca zdrowie psychiczne',110, 'Horror', 11,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (30,'Pokemon Detektyw Pikachu', 3, 'Prywatny deketyw Harry Goodman znika w niewyjasnionych okolocznosciach',104, 'Familijny', 14,3);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (31,'Trzy kroki od siebie', 7, 'Zycie chorej na mukowiscydoze Stelli Grant ulega zmianie, gdy poczas pobyti w szpitalu poznaje pacjenta Willa',116, 'Melodramat', 19,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (32,'Le Mans 66', 7, 'Na zlecenie Henrego Forda 2 amerykanski projektant Carrol Shelby podejmuje wyzwanie pokonania samochodow Ferrari',90, 'Biograficzny', 20,2);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (33,'Tolkien', 7, 'Kluczowe lata z zycia nastoletniego Tolkiena, ktory po smierci matki trafia do szkoly z internatem',112, 'Biograficzny', 21,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (34,'Smetarz dla zwierzakow', 18, 'Rodzina odkrywa tejemniczy cmentarz. Wkrotce zaczynaja sie dziac przerazajace rzeczy',101, 'Horror', 22,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (35,'Nieznajomi', 3, 'Grupa przyjaciol postanawia ze do konca kolacji wszystkie rozmowy telefoniczne maja byc w trybie glosnomowiacym',103, 'Komedia', 23,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (36,'Historia malzenska', 3, 'Po dziesieciu latach malzenstwo Nicole i Charliego zaczyna sie rozpadac',136, 'Komedia', 24,2);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (37,'Krol', 12, 'Ksiaze Hal musi zmienic sie z krnabrnego prozniaka w silnego wladce i walczyc o Anglie',133, 'Biograficzny', 17,2);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (38,'Niedobrani', 3, 'Dziennikarz polityczny probuje umowic sie ze swoja byla opiekunka ktora zajmuje wazna pozycje w rzadzie',125, 'Komedia', 25,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (39,'Doktor Sen', 18, 'Minelo wiele lat od czasu wydarzen, ktore rozegraly sie w lsnieniu.',151, 'Horror', 1,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (40,'Yesterday', 7, 'Mlody mezczyzna budzi sie w swiecie, gdzie nikt oprocz niego nie zna piosenek Beatlesow',112, 'Komedia', 4,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (41,'Szybcy i Wsciekli: Hobbs i Shaw', 7, 'Stroz prawa Luke Hobbs i wyrzuteg Deckard Shaw lacza swoje sily przeciwko cybernetycznie zmodyfikowanemu przestepcy',134, 'Akcja', 3,2);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (42,'Polityka', 18, 'Spojrzenie na zachowania polskich politykow, gdy kamery sa wylaczone',135, 'Obyczajowy', 6,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (43,'Oszustki', 7, 'Mlody milioner stanie sie obiektem rywalizacji dwoch oszustek',94, 'Komedia', 8,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (44,'Planeta Singli 3', 7, 'Ania i Tomek planuja wesele na wsi u rodziny mezczyzny',103, 'Komedia', 12,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (45,'Rodzina Addamsow', 7, 'Rodzina Addamsow po przeprowadce do New Jersey musis staic czolo wyzwaniom 21 wieku',87, 'Familijny', 14,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (46,'Zabojczy Rejs', 7, 'W trakcie wakacji na jachci miliardera nowojorski policjant i jego zona staja sie glownymi podejrzanymi',97, 'Komedia', 15,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (47,'After', 18, 'Tessa rozpoczyna wymarzone studia',100, 'Akcja', 18,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (48,'Underdog', 12, 'Borys Kosinski to zawodnik MMA, ktory jest u szczytu formy',116, 'Akcja', 17,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (49,'Dumbo', 3, 'Byy zolnierz Holt zostaje opiekunem cyrkowego slonia',112, 'Familijny', 16,1);
-INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser,id_Jakosc) VALUES (50,'Godzilla 2: Krol potworow', 12, 'Po pojawieniu sie nowego zagrozenia Krol Potworow powraca , by ponownie przywrocic w przyrodzie rownowage',132, 'Akcja', 20,3);
-
-
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (1,'Titanic',15,'Film dokumentalny opowiadajacy o zatonieciu titanica',100 , 'Dokumentalny', 1,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (2,'Jurassic Park', 15, 'Film o dinozaurach',90, 'Akcja', 3,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (3,'Joker', 18, 'Strudzony zyciem komik popada w obled i staje sie psychopatycznym morderca', 122, 'Dramat', 1,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (4,'Pewnego razu... w Holywood', 15, 'Aktor Rick Dalton i jego przyjaciel kaskader powracaja do Hollywood',161 , 'Akcja', 2,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (5,'Avengers: Koniec Gry', 12, 'Po wymazaniu polowy zycia we Wszechswiecie przez Thanosa Avengersi staraja sie zrobic wszystko, co konieczne, aby pokonac szalonego tytana',182, 'Akcja', 3,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (6,'Irlandczyk', 18, 'Platny zabojca Frank Sheeran powraca do sekretow, ktorych strzegl jako lojalny czlonek rodziny przestepczej Bufalino',210 , 'Biograficzny', 4,2);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (7,'Boze Cialo', 18, 'Dwudziestoletni Daniel zostaje warunkowo zwolniony z poprawczaka', 115, 'Obyczajowy', 5,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (8,'Kapitan Marvel', 7, 'Ziemska kobieta po kontakcie z obca rasa Kree otrzymuje nadludzkie moce',124 , 'Akcja', 6,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (9,'Glass', 18, 'Straznik David Dunn, wykorzystuje swoje nadprzyrodzone zdolnosci, tropi czlowieka o wielu osobowosciach',129, 'Thriller', 7,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (10,'Krol Lew', 3, 'W wyniku podstepu Skazy, prawowity wladca Afrykanskiej sawanny Simba zostaje wygnany',118, 'Familijny', 8,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (11,'Parasite', 12, 'Kiedy Ki-Woo dostaje prace jako koreptetytor corki zamoznego malzenstwa, wymysla sposob na zapewnienie zatrudnienia rowniez reszcie swojej rodziny',122, 'Dramat', 3,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (12,'Jak wytresowac smoka 3', 3, 'Opowiesc o wytresowaniu smoka',104, 'Familijny', 15,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (13,'Spider-Man: Daleko od domu', 7, 'Kolejny film o czlowieku pajaku',129, 'Akcja', 17,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (14,'Ad Astra', 15, 'Astronauta przeszukuje galaktyke w celu odnalezienia zaginionego dwadziescia lat wczesniej ojca',124, 'Thriller', 10,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (15,'To: Rozdzial 2', 18, '27 lat po tragicznych wydarzeniach w Derry dorosli czlonkowie "klubu Frajerow" powracaja do miasteczka, aby ponownie zmierzyc sie z zabojczym klaunem',169, 'Horror', 20,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (16,'Gwiezdne Wojny: Skywalker. Odrodzenie', 7, 'Czlonkowie organizacji Ruchu Oporu ponownie stawiaja czola Najwyzszemu Porzadkowi',155, 'Przygodowy', 3,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (17,'X-Men: Mroczna Phoenix', 12, 'Kolejny nudny film o x-menach',114, 'Akcja', 23,2);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (18,'Na noze', 7, 'Detektyw Blanc bada sprawe smierci bogatego pisarza, glowy ekscentrycznej rodziny. Wszyscy jego krewni sa podejrzani',130, 'Kryminal', 25,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (19,'Tylko nie mow nikomu', 12, 'Dzienikarz sledczy rozmawia z dziewiecioma ksiezmi katolickimi, ktorzy dopuscili sie zbrodni pedofilii i molestowania nieletnich',121, 'Dokumentalny', 24,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (20,'John Wick 3', 12, 'John Wick probuje opuscic Nowy Jork po tym, jak zostaje wydalony z organizacji zabojcow za morderstwo czlonka rady',131, 'Akcja', 16,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (21,'Toy Story 4', 3, 'Kowboj Chudy wraz z przyjaciolmi wyruszaja na poszukiwania zaginionej nowej zabawki, Sztucka',100, 'Familijny', 13,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (22,'Shazam!', 3, 'Chlopiec otrzymuje moce dzieki ktorym staje sie doroslym superbohaterem',132, 'Akcja', 12,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (23,'Alladyn', 3, 'Chlopak o czystym sercu dostaje propozycje od poteznego wezyra, by znalazl dla niego tajemnicza lampe',128, 'Przygodowy', 15,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (24,'Rocketman', 3, 'Historia zycia Eltona Johna',121, 'Biograficzny', 4,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (25,'Zombieland: Kulku w leb', 12, 'Od czasu gdy na ziemi pojawily sie zombie udalo im sie ewoluowac przez co trudniej z nimi walczyc',93, 'Komedia', 2,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (26,'Czarownica 2', 7, 'Aurora postanawia wyjsc za maz i zamieszkac w zamku przyszlego meza',119, 'Familijny', 7,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (27,'To my', 12, 'Matka i ojciec spedzaja czas z dziecmi w domku na plazy. Wkrotce ich spokoj zakocaja nieproszeni goscie',120, 'Thriller', 8,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (28,'Kraina Lodu 2', 3, 'Elsa i Anna wraz z przyjaciolmi udaja sie do zaczarowanego lasu w poszukiwaniu pomocy dla swojego krolestwa',103, 'Przygodowy', 9,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (29,'Lighthouse', 15, 'Historia dwoch straznikow latarni morskiej ktorzy w obliczy samotnosci powoli traca zdrowie psychiczne',110, 'Horror', 11,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (30,'Pokemon Detektyw Pikachu', 3, 'Prywatny deketyw Harry Goodman znika w niewyjasnionych okolocznosciach',104, 'Familijny', 14,3);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (31,'Trzy kroki od siebie', 7, 'Zycie chorej na mukowiscydoze Stelli Grant ulega zmianie, gdy poczas pobyti w szpitalu poznaje pacjenta Willa',116, 'Melodramat', 19,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (32,'Le Mans 66', 7, 'Na zlecenie Henrego Forda 2 amerykanski projektant Carrol Shelby podejmuje wyzwanie pokonania samochodow Ferrari',90, 'Biograficzny', 20,2);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (33,'Tolkien', 7, 'Kluczowe lata z zycia nastoletniego Tolkiena, ktory po smierci matki trafia do szkoly z internatem',112, 'Biograficzny', 21,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (34,'Smetarz dla zwierzakow', 18, 'Rodzina odkrywa tejemniczy cmentarz. Wkrotce zaczynaja sie dziac przerazajace rzeczy',101, 'Horror', 22,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (35,'Nieznajomi', 3, 'Grupa przyjaciol postanawia ze do konca kolacji wszystkie rozmowy telefoniczne maja byc w trybie glosnomowiacym',103, 'Komedia', 23,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (36,'Historia malzenska', 3, 'Po dziesieciu latach malzenstwo Nicole i Charliego zaczyna sie rozpadac',136, 'Komedia', 24,2);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (37,'Krol', 12, 'Ksiaze Hal musi zmienic sie z krnabrnego prozniaka w silnego wladce i walczyc o Anglie',133, 'Biograficzny', 17,2);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (38,'Niedobrani', 3, 'Dziennikarz polityczny probuje umowic sie ze swoja byla opiekunka ktora zajmuje wazna pozycje w rzadzie',125, 'Komedia', 25,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (39,'Doktor Sen', 18, 'Minelo wiele lat od czasu wydarzen, ktore rozegraly sie w lsnieniu.',151, 'Horror', 1,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (40,'Yesterday', 7, 'Mlody mezczyzna budzi sie w swiecie, gdzie nikt oprocz niego nie zna piosenek Beatlesow',112, 'Komedia', 4,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (41,'Szybcy i Wsciekli: Hobbs i Shaw', 7, 'Stroz prawa Luke Hobbs i wyrzuteg Deckard Shaw lacza swoje sily przeciwko cybernetycznie zmodyfikowanemu przestepcy',134, 'Akcja', 3,2);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (42,'Polityka', 18, 'Spojrzenie na zachowania polskich politykow, gdy kamery sa wylaczone',135, 'Obyczajowy', 6,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (43,'Oszustki', 7, 'Mlody milioner stanie sie obiektem rywalizacji dwoch oszustek',94, 'Komedia', 8,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (44,'Planeta Singli 3', 7, 'Ania i Tomek planuja wesele na wsi u rodziny mezczyzny',103, 'Komedia', 12,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (45,'Rodzina Addamsow', 7, 'Rodzina Addamsow po przeprowadce do New Jersey musis staic czolo wyzwaniom 21 wieku',87, 'Familijny', 14,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (46,'Zabojczy Rejs', 7, 'W trakcie wakacji na jachci miliardera nowojorski policjant i jego zona staja sie glownymi podejrzanymi',97, 'Komedia', 15,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (47,'After', 18, 'Tessa rozpoczyna wymarzone studia',100, 'Akcja', 18,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (48,'Underdog', 12, 'Borys Kosinski to zawodnik MMA, ktory jest u szczytu formy',116, 'Akcja', 17,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (49,'Dumbo', 3, 'Byy zolnierz Holt zostaje opiekunem cyrkowego slonia',112, 'Familijny', 16,1);
+INSERT INTO Filmy (id_Filmy,tytul, kat_wiekowa, opis,czas_trwania, gatunek, id_Rezyser, id_Jakosc) VALUES (50,'Godzilla 2: Krol potworow', 12, 'Po pojawieniu sie nowego zagrozenia Krol Potworow powraca , by ponownie przywrocic w przyrodzie rownowage',132, 'Akcja', 20,3);
 
 
 

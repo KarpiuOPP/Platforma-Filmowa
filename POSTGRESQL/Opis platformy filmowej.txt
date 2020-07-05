@@ -1,0 +1,6 @@
+Zaprojektuj schemat bazy danych dla platformy wyświetlającej filmy. W bazie muszą znaleźć się takie informacje jak:
+Filmy jakie są wyświetlane na platformie ich jakość w jakieś są odtwarzane, a także czas trwania, kategoria wiekowa.
+Należy pamietać, że w każdym filmie może grać wielu aktorów. I każdy film posiada także jednego reżysera.
+Klienci, którzy zarejestrują się na platformie muszą podać swoją płeć, wiek, email oraz adres zamieszkania.
+Klienci korzystający z platformy mogą dodawać filmy do ulubionych, a także wykupić konto premium, które umożliwia wyświetlanie filmów
+bez reklam.
